@@ -8,9 +8,10 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class MailTest{
     private MailPage mail;
+    private int expectedMessagesCount = 3;
 
     @BeforeTest
-    public void beforeTest() {
+    public void beforeTest() throws Exception {
         String login = System.getProperty("credentials.username");
         String password = System.getProperty("credentials.password");
         TutbyPage page = open("/", TutbyPage.class);
@@ -20,12 +21,12 @@ public class MailTest{
 
     @Test(description = "let's take number of sent mails from the badge on the left side panel")
     public void testBadgeContent() throws Exception {
-        mail.leftPanel.getSentMessagesNumber().shouldHave(exactText("3"));
+        mail.leftPanel.getSentMessagesNumber().shouldHave(exactText(String.valueOf(expectedMessagesCount)));
     }
 
     @Test(description = "as an alternative let's count visible items of the messages list (will not work in case there is pagination or something like)")
     public void testVisibleMessagesCount() throws Exception {
         mail.leftPanel.sentFolder.click();
-        mail.getVisibleMessages().shouldHaveSize(3);
+        mail.getVisibleMessages().shouldHaveSize(expectedMessagesCount);
     }
 }
