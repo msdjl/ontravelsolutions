@@ -1,5 +1,8 @@
 package com.ontravelsolutions.tutby;
 
+import com.ontravelsolutions.tutby.pages.MailPage;
+import com.ontravelsolutions.tutby.pages.TutbyPage;
+import com.ontravelsolutions.tutby.util.Config;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -8,12 +11,12 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class MailTest{
     private MailPage mail;
-    private int expectedMessagesCount = 3;
+    final private int expectedMessagesCount = 3;
 
     @BeforeTest
     public void beforeTest() throws Exception {
-        String login = System.getProperty("credentials.username");
-        String password = System.getProperty("credentials.password");
+        String login = Config.username;
+        String password = Config.password;
         TutbyPage page = open("/", TutbyPage.class);
         page.login(login, password);
         mail = page.mainMenu.openMailPage();
